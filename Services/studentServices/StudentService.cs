@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TE19DWEBAPIKURS.Models;
 
 namespace TE19DWEBAPIKURS.Services.studentServices
@@ -12,9 +13,31 @@ namespace TE19DWEBAPIKURS.Services.studentServices
             new Student() {Id = 3, Name = "Boris", EnergyStudent = StudentEnergy.Nocco, ClassStudent = StudentClass.TE19D }
         };
 
+        private readonly DataContext _context;
+
+        public StudentService(DataContext context)
+        {
+            _context = context;
+        }
+
         public List<Student> GetStudentList()
         {
-            return studentLista;
+            return _context.students.ToList();
+        }
+
+        public List<Student> AddStudent(Student newStudent) {
+            _context.students.Add(newStudent);
+            _context.SaveChanges();
+            return _context.students.ToList();
+        }
+
+        public List<Student> RemoveStudent(int id) {
+            
+            var hittadStudent = _context.students.FirstOrDefault(student => student.Id == id);
+            _context.students.Remove(hittadStudent);
+            _context.SaveChanges();
+            return _context.students.ToList();
+
         }
     }
 }
