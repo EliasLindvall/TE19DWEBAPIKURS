@@ -18,5 +18,15 @@ namespace TE19DWEBAPIKURS.Controllers
         [HttpGet]
         public ActionResult<List<Student>> GetStudents() => Ok(_StudentService.GetStudentList());
 
+        [HttpPost]
+        public ActionResult<List<Student>> AddStudent(Student newStudent) {
+            return Ok(_StudentService.AddStudent(newStudent));
+        }
+
+        [HttpDelete]
+        public ActionResult<List<Student>> RemoveStudent(int id) {
+            return Ok(_StudentService.RemoveStudent(id));
+        }
+
     }
 }
